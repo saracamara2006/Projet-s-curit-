@@ -1,8 +1,7 @@
 # Plateforme MySQL 8.4 LTS durcie, chiffrée et conforme : variante D (Ressources humaines)
 
-**Étudiante :** CAMARA Sara, B3 Cybersécurité, Maroc Ynov Campus
-**Enseignant :** M. Hamza ESSAD, module « Administration et sécurité des bases de données »
-**Schéma :** `rh_camara` (variante D : `rh_<nom>`)
+
+**Schéma :** `rh_camara` (variante D : `rh_<Camara>`)
 **Cadre réglementaire :** loi marocaine 09-08 (protection des données à caractère personnel)
 **Environnement de réalisation :** VM Ubuntu (VMware), Docker Compose v2, MySQL 8.4.13
 
