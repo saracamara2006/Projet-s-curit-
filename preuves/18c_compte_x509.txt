@@ -1,0 +1,16 @@
+=== Création compte REQUIRE X509 ===
++-------------------+--------------+-----------+----------------+
+| user              | host         | ssl_type  | account_locked |
++-------------------+--------------+-----------+----------------+
+| tls_client_camara | 172.31.77.20 | SPECIFIED | N              |
++-------------------+--------------+-----------+----------------+
+=== Test SANS certificat client (attendu : refus) ===
+ERROR 1045 (28000): Access denied for user 'tlc_client_camara'@'172.31.77.20' (using password: YES)
+ERROR 1045 (28000): Access denied for user 'trs_client_camara'@'172.31.77.20' (using password: YES)
+ERROR 1045 (28000): Access denied for user 'tls_client_camara'@'172.31.77.20' (using password: YES)
+=== Test AVEC certificat client CN=rh-client (attendu : OK) ===
++--------------------------------+
+| CURRENT_USER()                 |
++--------------------------------+
+| tls_client_camara@172.31.77.20 |
++--------------------------------+

@@ -1,0 +1,10 @@
++------------+----------------+
+| TABLE_NAME | CREATE_OPTIONS |
++------------+----------------+
+| employes   | ENCRYPTION='Y' |
+| zz_temoin  |                |
++------------+----------------+
+Occurrences de 'El Fassi' dans zz_temoin.ibd (NON chiffre) :
+70
+Occurrences de 'El Fassi' dans employes.ibd (CHIFFRE) :
+0

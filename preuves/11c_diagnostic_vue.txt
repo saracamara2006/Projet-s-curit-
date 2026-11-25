@@ -1,0 +1,9 @@
+== T0 : etat normal (compte verrouille, droit via role) ==
+ERROR 1143 (42000) at line 1: SELECT command denied to user 'rh_view_owner'@'%' for column 'manager_id' in table 'employes'
+== T1 : compte proprietaire DEVERROUILLE ==
+ERROR 1143 (42000) at line 1: SELECT command denied to user 'rh_view_owner'@'%' for column 'manager_id' in table 'employes'
+== T2 : droit donne directement au compte (sans role) ==
+ERROR 1143 (42000) at line 1: SELECT command denied to user 'rh_view_owner'@'%' for column 'manager_id' in table 'employes'
+== verification : proprietaire reverrouille ==
+user	host	account_locked
+rh_view_owner	%	Y

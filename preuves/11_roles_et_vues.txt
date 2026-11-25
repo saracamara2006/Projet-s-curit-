@@ -1,0 +1,12 @@
+user	host	account_locked
+rh_view_owner	localhost	Y
+role_auditeur_rh	%	Y
+role_drh	%	Y
+role_gestionnaire_rh	%	Y
+role_manager	%	Y
+role_paie	%	Y
+role_sauvegarde	%	Y
+role_supervision	%	Y
+TABLE_NAME	DEFINER	SECURITY_TYPE
+v_absences_equipe	rh_view_owner@localhost	DEFINER
+v_mon_equipe	rh_view_owner@localhost	DEFINER

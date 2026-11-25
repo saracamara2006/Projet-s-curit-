@@ -1,0 +1,36 @@
+== paie lit les salaires de l'employe 9 via la procedure (attendu : 12 mois, brut 11271.00, net 8791.38)
+  > CALL rh_camara.sp_lire_salaires(9, UNHEX('<CLE_AES_256>'));
+  +------------+--------------+--------+-------------+
+  | mois       | salaire_brut | primes | net_a_payer |
+  +------------+--------------+--------+-------------+
+  | 2025-10-01 |     11271.00 |   0.00 |     8791.38 |
+  | 2025-11-01 |     11271.00 |   0.00 |     8791.38 |
+  | 2025-12-01 |     11271.00 |   0.00 |     8791.38 |
+  | 2026-01-01 |     11271.00 |   0.00 |     8791.38 |
+  | 2026-02-01 |     11271.00 |   0.00 |     8791.38 |
+  | 2026-03-01 |     11271.00 |   0.00 |     8791.38 |
+  | 2026-04-01 |     11271.00 |   0.00 |     8791.38 |
+  | 2026-05-01 |     11271.00 |   0.00 |     8791.38 |
+  | 2026-06-01 |     11271.00 |   0.00 |     8791.38 |
+  | 2026-07-01 |     11271.00 |   0.00 |     8791.38 |
+  | 2026-08-01 |     11271.00 |   0.00 |     8791.38 |
+  | 2026-09-01 |     11271.00 |   0.00 |     8791.38 |
+  +------------+--------------+--------+-------------+
+== paie avec une MAUVAISE cle (attendu : ERROR 1644 dechiffrement impossible)
+  > CALL rh_camara.sp_lire_salaires(9, UNHEX('<MAUVAISE_CLE>'));
+  ERROR 1644 (45000) at line 1: Dechiffrement impossible : mauvaise cle ou donnee alteree
+== paie ecrit via la procedure (memes montants : donnee inchangee, nouvel IV)
+  > CALL rh_camara.sp_ecrire_salaire(9, '2025-10-01', 11271.00, 0.00, UNHEX('<CLE_AES_256>'));
+== paie lit la table directement (attendu : ERROR 1142)
+  > SELECT * FROM rh_camara.salaires LIMIT 1;
+  ERROR 1142 (42000) at line 1: SELECT command denied to user 'paie_camara'@'172.31.77.20' for table 'salaires'
+== drh lit la table (attendu : ERROR 1142) puis appelle la procedure (attendu : ERROR 1370)
+  > SELECT * FROM rh_camara.salaires LIMIT 1;
+  ERROR 1142 (42000) at line 1: SELECT command denied to user 'drh_camara'@'172.31.77.20' for table 'salaires'
+  > CALL rh_camara.sp_lire_salaires(9, UNHEX('<CLE_AES_256>'));
+  ERROR 1370 (42000) at line 1: execute command denied to user 'drh_camara'@'172.31.77.20' for routine 'rh_camara.sp_lire_salaires'
+== manager et gestionnaire : procedure refusee (attendu : ERROR 1370)
+  > CALL rh_camara.sp_lire_salaires(9, UNHEX('<CLE_AES_256>'));
+  ERROR 1370 (42000) at line 1: execute command denied to user 'mgr_dsi'@'172.31.77.20' for routine 'rh_camara.sp_lire_salaires'
+  > CALL rh_camara.sp_lire_salaires(9, UNHEX('<CLE_AES_256>'));
+  ERROR 1370 (42000) at line 1: execute command denied to user 'gest_camara'@'172.31.77.20' for routine 'rh_camara.sp_lire_salaires'

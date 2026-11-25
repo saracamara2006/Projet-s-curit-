@@ -1,0 +1,32 @@
++----------------------+--------------+-----------------------+----------------+
+| user                 | host         | plugin                | account_locked |
++----------------------+--------------+-----------------------+----------------+
+| admin_camara         | localhost    | caching_sha2_password | N              |
+| audit_camara         | 172.31.77.20 | caching_sha2_password | N              |
+| backup_camara        | 172.31.77.20 | caching_sha2_password | N              |
+| drh_camara           | 172.31.77.20 | caching_sha2_password | N              |
+| gest_camara          | 172.31.77.20 | caching_sha2_password | N              |
+| mgr_com              | 172.31.77.20 | caching_sha2_password | N              |
+| mgr_dsi              | 172.31.77.20 | caching_sha2_password | N              |
+| mgr_fin              | 172.31.77.20 | caching_sha2_password | N              |
+| mgr_jur              | 172.31.77.20 | caching_sha2_password | N              |
+| mgr_log              | 172.31.77.20 | caching_sha2_password | N              |
+| mgr_mkt              | 172.31.77.20 | caching_sha2_password | N              |
+| mgr_prod             | 172.31.77.20 | caching_sha2_password | N              |
+| mgr_rh               | 172.31.77.20 | caching_sha2_password | N              |
+| monitor_camara       | 172.31.77.20 | caching_sha2_password | N              |
+| paie_camara          | 172.31.77.20 | caching_sha2_password | N              |
+| rh_camara_app        | 172.31.77.20 | caching_sha2_password | N              |
+| rh_crypto_owner      | %            | caching_sha2_password | Y              |
+| rh_view_owner        | %            | caching_sha2_password | Y              |
+| role_auditeur_rh     | %            | caching_sha2_password | Y              |
+| role_drh             | %            | caching_sha2_password | Y              |
+| role_gestionnaire_rh | %            | caching_sha2_password | Y              |
+| role_manager         | %            | caching_sha2_password | Y              |
+| role_paie            | %            | caching_sha2_password | Y              |
+| role_sauvegarde      | %            | caching_sha2_password | Y              |
+| role_supervision     | %            | caching_sha2_password | Y              |
+| root                 | localhost    | caching_sha2_password | N              |
+| sara_camara_rh       | 172.31.77.20 | caching_sha2_password | N              |
+| tls_client_camara    | 172.31.77.20 | caching_sha2_password | N              |
++----------------------+--------------+-----------------------+----------------+

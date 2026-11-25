@@ -1,0 +1,31 @@
++---------------------+-----------------------------------------------+
+| STATUS_KEY          | STATUS_VALUE                                  |
++---------------------+-----------------------------------------------+
+| Component_name      | component_keyring_file                        |
+| Author              | Oracle Corporation                            |
+| License             | GPL                                           |
+| Implementation_name | component_keyring_file                        |
+| Version             | 1.0                                           |
+| Component_status    | Active                                        |
+| Data_file           | /var/lib/mysql-keyring/component_keyring_file |
+| Read_only           | No                                            |
++---------------------+-----------------------------------------------+
++------------------------+------------+
+| NAME                   | ENCRYPTION |
++------------------------+------------+
+| mysql                  | N          |
+| rh_camara/departements | Y          |
+| rh_camara/employes     | Y          |
+| rh_camara/contrats     | Y          |
+| rh_camara/salaires     | Y          |
+| rh_camara/absences     | Y          |
+| rh_camara/evaluations  | Y          |
++------------------------+------------+
++--------------------------+-------+
+| Variable_name            | Value |
++--------------------------+-------+
+| binlog_encryption        | ON    |
+| default_table_encryption | ON    |
+| innodb_redo_log_encrypt  | ON    |
+| innodb_undo_log_encrypt  | ON    |
++--------------------------+-------+

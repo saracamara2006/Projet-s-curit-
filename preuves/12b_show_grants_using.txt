@@ -1,0 +1,73 @@
+-- SHOW GRANTS FOR drh_camara USING role_drh
+GRANT USAGE ON *.* TO `drh_camara`@`172.31.77.20`
+GRANT SELECT, INSERT, UPDATE ON `rh_camara`.`absences` TO `drh_camara`@`172.31.77.20`
+GRANT SELECT, INSERT, UPDATE ON `rh_camara`.`contrats` TO `drh_camara`@`172.31.77.20`
+GRANT SELECT, INSERT, UPDATE ON `rh_camara`.`departements` TO `drh_camara`@`172.31.77.20`
+GRANT SELECT, INSERT, UPDATE ON `rh_camara`.`employes` TO `drh_camara`@`172.31.77.20`
+GRANT SELECT, INSERT, UPDATE ON `rh_camara`.`evaluations` TO `drh_camara`@`172.31.77.20`
+GRANT SELECT ON `rh_camara`.`salaires` TO `drh_camara`@`172.31.77.20`
+GRANT `role_drh`@`%` TO `drh_camara`@`172.31.77.20`
+
+-- SHOW GRANTS FOR gest_camara USING role_gestionnaire_rh
+GRANT USAGE ON *.* TO `gest_camara`@`172.31.77.20`
+GRANT SELECT, INSERT, UPDATE ON `rh_camara`.`absences` TO `gest_camara`@`172.31.77.20`
+GRANT SELECT, INSERT, UPDATE ON `rh_camara`.`contrats` TO `gest_camara`@`172.31.77.20`
+GRANT SELECT ON `rh_camara`.`departements` TO `gest_camara`@`172.31.77.20`
+GRANT SELECT, INSERT, UPDATE ON `rh_camara`.`employes` TO `gest_camara`@`172.31.77.20`
+GRANT `role_gestionnaire_rh`@`%` TO `gest_camara`@`172.31.77.20`
+
+-- SHOW GRANTS FOR paie_camara USING role_paie
+GRANT USAGE ON *.* TO `paie_camara`@`172.31.77.20`
+GRANT SELECT (`departement_id`, `id`, `matricule`, `nom`, `prenom`) ON `rh_camara`.`employes` TO `paie_camara`@`172.31.77.20`
+GRANT SELECT, INSERT, UPDATE ON `rh_camara`.`salaires` TO `paie_camara`@`172.31.77.20`
+GRANT `role_paie`@`%` TO `paie_camara`@`172.31.77.20`
+
+-- SHOW GRANTS FOR audit_camara USING role_auditeur_rh
+GRANT USAGE ON *.* TO `audit_camara`@`172.31.77.20`
+GRANT SELECT ON `rh_camara`.`absences` TO `audit_camara`@`172.31.77.20`
+GRANT SELECT ON `rh_camara`.`contrats` TO `audit_camara`@`172.31.77.20`
+GRANT SELECT ON `rh_camara`.`departements` TO `audit_camara`@`172.31.77.20`
+GRANT `role_auditeur_rh`@`%` TO `audit_camara`@`172.31.77.20`
+
+-- SHOW GRANTS FOR backup_camara USING role_sauvegarde
+GRANT RELOAD, PROCESS, REPLICATION CLIENT ON *.* TO `backup_camara`@`172.31.77.20`
+GRANT BACKUP_ADMIN ON *.* TO `backup_camara`@`172.31.77.20`
+GRANT SELECT, LOCK TABLES, SHOW VIEW ON `rh_camara`.* TO `backup_camara`@`172.31.77.20`
+GRANT `role_sauvegarde`@`%` TO `backup_camara`@`172.31.77.20`
+
+-- SHOW GRANTS FOR monitor_camara USING role_supervision
+GRANT PROCESS, REPLICATION CLIENT ON *.* TO `monitor_camara`@`172.31.77.20`
+GRANT SELECT ON `sys`.* TO `monitor_camara`@`172.31.77.20`
+GRANT SELECT ON `performance_schema`.* TO `monitor_camara`@`172.31.77.20`
+GRANT `role_supervision`@`%` TO `monitor_camara`@`172.31.77.20`
+
+-- SHOW GRANTS FOR mgr_dsi USING role_manager
+GRANT USAGE ON *.* TO `mgr_dsi`@`172.31.77.20`
+GRANT SELECT ON `rh_camara`.`v_absences_equipe` TO `mgr_dsi`@`172.31.77.20`
+GRANT SELECT ON `rh_camara`.`v_mon_equipe` TO `mgr_dsi`@`172.31.77.20`
+GRANT SELECT ON `rh_camara`.`v_t1` TO `mgr_dsi`@`172.31.77.20`
+GRANT SELECT ON `rh_camara`.`v_t2` TO `mgr_dsi`@`172.31.77.20`
+GRANT SELECT ON `rh_camara`.`v_t3` TO `mgr_dsi`@`172.31.77.20`
+GRANT SELECT ON `rh_camara`.`v_t4` TO `mgr_dsi`@`172.31.77.20`
+GRANT SELECT ON `rh_camara`.`v_t5` TO `mgr_dsi`@`172.31.77.20`
+GRANT `role_manager`@`%` TO `mgr_dsi`@`172.31.77.20`
+
+-- SHOW GRANTS FOR mgr_fin USING role_manager
+GRANT USAGE ON *.* TO `mgr_fin`@`172.31.77.20`
+GRANT SELECT ON `rh_camara`.`v_absences_equipe` TO `mgr_fin`@`172.31.77.20`
+GRANT SELECT ON `rh_camara`.`v_mon_equipe` TO `mgr_fin`@`172.31.77.20`
+GRANT SELECT ON `rh_camara`.`v_t1` TO `mgr_fin`@`172.31.77.20`
+GRANT SELECT ON `rh_camara`.`v_t2` TO `mgr_fin`@`172.31.77.20`
+GRANT SELECT ON `rh_camara`.`v_t3` TO `mgr_fin`@`172.31.77.20`
+GRANT SELECT ON `rh_camara`.`v_t4` TO `mgr_fin`@`172.31.77.20`
+GRANT SELECT ON `rh_camara`.`v_t5` TO `mgr_fin`@`172.31.77.20`
+GRANT `role_manager`@`%` TO `mgr_fin`@`172.31.77.20`
+
+-- SHOW GRANTS FOR rh_camara_app USING role_gestionnaire_rh
+GRANT USAGE ON *.* TO `rh_camara_app`@`172.31.77.20`
+GRANT SELECT, INSERT, UPDATE ON `rh_camara`.`absences` TO `rh_camara_app`@`172.31.77.20`
+GRANT SELECT, INSERT, UPDATE ON `rh_camara`.`contrats` TO `rh_camara_app`@`172.31.77.20`
+GRANT SELECT ON `rh_camara`.`departements` TO `rh_camara_app`@`172.31.77.20`
+GRANT SELECT, INSERT, UPDATE ON `rh_camara`.`employes` TO `rh_camara_app`@`172.31.77.20`
+GRANT `role_gestionnaire_rh`@`%` TO `rh_camara_app`@`172.31.77.20`
+

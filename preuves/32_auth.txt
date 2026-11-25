@@ -1,0 +1,33 @@
++-------------------------------------------------+--------+
+| Variable_name                                   | Value  |
++-------------------------------------------------+--------+
+| validate_password.changed_characters_percentage | 0      |
+| validate_password.check_user_name               | ON     |
+| validate_password.dictionary_file               |        |
+| validate_password.length                        | 14     |
+| validate_password.mixed_case_count              | 1      |
+| validate_password.number_count                  | 1      |
+| validate_password.policy                        | STRONG |
+| validate_password.special_char_count            | 1      |
++-------------------------------------------------+--------+
++---------------------------+-------+
+| Variable_name             | Value |
++---------------------------+-------+
+| default_password_lifetime | 90    |
++---------------------------+-------+
++-------------------+--------------+-------------------+------------------+
+| user              | host         | password_lifetime | password_expired |
++-------------------+--------------+-------------------+------------------+
+| audit_camara      | 172.31.77.20 |              NULL | N                |
+| backup_camara     | 172.31.77.20 |              NULL | N                |
+| drh_camara        | 172.31.77.20 |              NULL | N                |
+| gest_camara       | 172.31.77.20 |              NULL | N                |
+| mgr_dsi           | 172.31.77.20 |              NULL | N                |
+| mgr_fin           | 172.31.77.20 |              NULL | N                |
+| monitor_camara    | 172.31.77.20 |              NULL | N                |
+| paie_camara       | 172.31.77.20 |              NULL | N                |
+| rh_camara_app     | 172.31.77.20 |                 0 | N                |
+| sara_camara_rh    | 172.31.77.20 |              NULL | N                |
+| tls_client_camara | 172.31.77.20 |              NULL | N                |
+| admin_camara      | localhost    |              NULL | N                |
++-------------------+--------------+-------------------+------------------+

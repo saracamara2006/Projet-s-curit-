@@ -1,0 +1,34 @@
++-----------------------------------------------------------------------+
+| Grants for role_manager@%                                             |
++-----------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `role_manager`@`%`                              |
+| GRANT SELECT ON `rh_camara`.`v_absences_equipe` TO `role_manager`@`%` |
+| GRANT SELECT ON `rh_camara`.`v_mon_equipe` TO `role_manager`@`%`      |
++-----------------------------------------------------------------------+
++------------------------------------------------------------------------------------------------------------------+
+| Grants for role_paie@%                                                                                           |
++------------------------------------------------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `role_paie`@`%`                                                                            |
+| GRANT SELECT (`departement_id`, `id`, `matricule`, `nom`, `prenom`) ON `rh_camara`.`employes` TO `role_paie`@`%` |
+| GRANT EXECUTE ON PROCEDURE `rh_camara`.`sp_ecrire_salaire` TO `role_paie`@`%`                                    |
+| GRANT EXECUTE ON PROCEDURE `rh_camara`.`sp_lire_salaires` TO `role_paie`@`%`                                     |
++------------------------------------------------------------------------------------------------------------------+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Grants for role_gestionnaire_rh@%                                                                                                                                                                                                                                                                                          |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `role_gestionnaire_rh`@`%`                                                                                                                                                                                                                                                                           |
+| GRANT SELECT, INSERT, UPDATE ON `rh_camara`.`absences` TO `role_gestionnaire_rh`@`%`                                                                                                                                                                                                                                       |
+| GRANT SELECT, INSERT, UPDATE ON `rh_camara`.`contrats` TO `role_gestionnaire_rh`@`%`                                                                                                                                                                                                                                       |
+| GRANT SELECT ON `rh_camara`.`departements` TO `role_gestionnaire_rh`@`%`                                                                                                                                                                                                                                                   |
+| GRANT SELECT, INSERT (`adresse`, `cin`, `date_embauche`, `date_naissance`, `departement_id`, `email_pro`, `manager_id`, `matricule`, `nom`, `poste`, `prenom`, `telephone`), UPDATE (`adresse`, `departement_id`, `email_pro`, `manager_id`, `poste`, `telephone`) ON `rh_camara`.`employes` TO `role_gestionnaire_rh`@`%` |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++------------------------------------------------------------------------------+
+| Grants for role_drh@%                                                        |
++------------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `role_drh`@`%`                                         |
+| GRANT SELECT, INSERT, UPDATE ON `rh_camara`.`absences` TO `role_drh`@`%`     |
+| GRANT SELECT, INSERT, UPDATE ON `rh_camara`.`contrats` TO `role_drh`@`%`     |
+| GRANT SELECT, INSERT, UPDATE ON `rh_camara`.`departements` TO `role_drh`@`%` |
+| GRANT SELECT, INSERT, UPDATE ON `rh_camara`.`employes` TO `role_drh`@`%`     |
+| GRANT SELECT, INSERT, UPDATE ON `rh_camara`.`evaluations` TO `role_drh`@`%`  |
++------------------------------------------------------------------------------+

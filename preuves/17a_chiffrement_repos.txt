@@ -1,0 +1,35 @@
++---------------------+-----------------------------------------------+
+| STATUS_KEY          | STATUS_VALUE                                  |
++---------------------+-----------------------------------------------+
+| Component_name      | component_keyring_file                        |
+| Author              | Oracle Corporation                            |
+| License             | GPL                                           |
+| Implementation_name | component_keyring_file                        |
+| Version             | 1.0                                           |
+| Component_status    | Active                                        |
+| Data_file           | /var/lib/mysql-keyring/component_keyring_file |
+| Read_only           | No                                            |
++---------------------+-----------------------------------------------+
++---------------+--------------+--------------+----------------+
+| tables_defaut | redo_chiffre | undo_chiffre | binlog_chiffre |
++---------------+--------------+--------------+----------------+
+|             1 |            1 |            1 |              1 |
++---------------+--------------+--------------+----------------+
++--------------+----------------+
+| TABLE_NAME   | CREATE_OPTIONS |
++--------------+----------------+
+| absences     | ENCRYPTION='Y' |
+| contrats     | ENCRYPTION='Y' |
+| departements | ENCRYPTION='Y' |
+| employes     | ENCRYPTION='Y' |
+| evaluations  | ENCRYPTION='Y' |
+| salaires     | ENCRYPTION='Y' |
++--------------+----------------+
+=== Recherche de chaines lisibles dans employes.ibd (attendu : 0 occurrence) ===
+Occurrences trouvees : 0
+-@r
+a@l
+3z@Q
+i@eI
++@r
+0

@@ -1,0 +1,2 @@
+Grants for rh_view_owner@%
+GRANT USAGE ON *.* TO `rh_view_owner`@`%`

@@ -1,0 +1,5 @@
+ERROR 1045 (28000): Access denied for user 'rh_camara_app'@'172.31.77.20' (using password: YES)
+ERROR 1045 (28000): Access denied for user 'rh_camara_app'@'172.31.77.20' (using password: YES)
+ERROR 3955 (HY000): Access denied for user 'rh_camara_app'@'172.31.77.20'. Account is blocked for 1 day(s) (1 day(s) remaining) due to 3 consecutive failed logins.
+--- bon mot de passe apres 3 echecs ---
+ERROR 3955 (HY000): Access denied for user 'rh_camara_app'@'172.31.77.20'. Account is blocked for 1 day(s) (1 day(s) remaining) due to 3 consecutive failed logins.

@@ -1,0 +1,11 @@
+INSTALL COMPONENT 'file://component_validate_password';
+SET PERSIST validate_password.policy = STRONG;
+SET PERSIST validate_password.length = 14;
+SET PERSIST validate_password.mixed_case_count = 1;
+SET PERSIST validate_password.number_count = 1;
+SET PERSIST validate_password.special_char_count = 1;
+SET PERSIST validate_password.check_user_name = ON;
+SET PERSIST default_password_lifetime = 90;
+SET PERSIST password_history = 5;
+SET PERSIST password_reuse_interval = 365;
+SET PERSIST password_require_current = ON;

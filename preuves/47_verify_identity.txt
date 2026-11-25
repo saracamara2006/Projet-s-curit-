@@ -1,0 +1,13 @@
+== avec le bon nom (db) : doit marcher ==
++----------------------+
+| CURRENT_USER()       |
++----------------------+
+| mgr_dsi@172.31.77.20 |
++----------------------+
++---------------+------------------------+
+| Variable_name | Value                  |
++---------------+------------------------+
+| Ssl_cipher    | TLS_AES_128_GCM_SHA256 |
++---------------+------------------------+
+== avec un nom absent du SAN (rh-db) : doit échouer ==
+ERROR 2026 (HY000): SSL connection error: error:0A000086:SSL routines::certificate verify failed

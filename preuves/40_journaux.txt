@@ -1,0 +1,9 @@
++---------------------+----------+
+| Variable_name       | Value    |
++---------------------+----------+
+| general_log         | OFF      |
+| log_error           | stderr   |
+| log_error_verbosity | 2        |
+| long_query_time     | 1.000000 |
+| slow_query_log      | ON       |
++---------------------+----------+

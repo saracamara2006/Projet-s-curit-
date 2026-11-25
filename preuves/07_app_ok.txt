@@ -1,0 +1,4 @@
+CURRENT_USER()
+rh_camara_app@172.31.77.20
+nb_dep
+8

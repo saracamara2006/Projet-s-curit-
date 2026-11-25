@@ -1,0 +1,1 @@
+ERROR 1819 (HY000) at line 1: Your password does not satisfy the current policy requirements

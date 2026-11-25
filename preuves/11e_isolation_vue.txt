@@ -1,0 +1,6 @@
+== t3 : sous-requete + USER() ==
+ERROR 1356 (HY000) at line 1: View 'rh_camara.v_t3' references invalid table(s) or column(s) or function(s) or definer/invoker of view lack rights to use them
+== t4 : jointure SANS USER() ==
+ERROR 1143 (42000) at line 1: SELECT command denied to user 'rh_view_owner'@'%' for column 'manager_id' in table 'employes'
+== t5 : USER() SANS jointure ==
+ERROR 1356 (HY000) at line 1: View 'rh_camara.v_t5' references invalid table(s) or column(s) or function(s) or definer/invoker of view lack rights to use them

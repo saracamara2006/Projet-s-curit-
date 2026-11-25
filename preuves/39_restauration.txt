@@ -1,0 +1,12 @@
+=== Restauration conteneur vierge (bloc 3.9) ===
+Sauvegarde utilisee : backups/20261124_175416
+
+--- 1. Verification integrite SHA256 ---
+binlogs.tar.enc: OK
+keyring.enc: OK
+rh_camara.sql.enc: OK
+
+--- 2. Preparation keyring et demarrage MySQL vierge ---
+Attente demarrage MySQL vierge...
+
+--- 3. Dechiffrement a la volee et restauration ---

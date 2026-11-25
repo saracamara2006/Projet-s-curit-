@@ -1,0 +1,8 @@
+Sauvegarde chiffree : backups/20261124_175416
+total 9260
+drwx------ 2 sara sara    4096 Nov 24 17:54 .
+drwxrwxr-x 3 sara sara    4096 Nov 24 17:54 ..
+-rw------- 1 sara sara     244 Nov 24 17:54 SHA256SUMS
+-rw------- 1 sara sara 6410272 Nov 24 17:54 binlogs.tar.enc
+-rw------- 1 sara sara     576 Nov 24 17:54 keyring.enc
+-rw------- 1 sara sara 3048560 Nov 24 17:54 rh_camara.sql.enc

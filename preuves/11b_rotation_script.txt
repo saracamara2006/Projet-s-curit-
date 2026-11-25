@@ -1,0 +1,7 @@
+=== Connexion avec nouveau mot de passe ===
++----------------------------+
+| CURRENT_USER()             |
++----------------------------+
+| rh_camara_app@172.31.77.20 |
++----------------------------+
+=== Ancien mot de passe supprime ===

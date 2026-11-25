@@ -1,0 +1,9 @@
+== AVANT (root lit la vue) ==
+test
+0
+== APRES (root lit la vue) ==
+test
+0
+TABLE_NAME	DEFINER	SECURITY_TYPE
+v_absences_equipe	rh_view_owner@%	DEFINER
+v_mon_equipe	rh_view_owner@%	DEFINER

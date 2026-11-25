@@ -1,0 +1,32 @@
++-----------------------------------------------------------------------+
+| Grants for role_manager@%                                             |
++-----------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `role_manager`@`%`                              |
+| GRANT SELECT ON `rh_camara`.`v_absences_equipe` TO `role_manager`@`%` |
+| GRANT SELECT ON `rh_camara`.`v_mon_equipe` TO `role_manager`@`%`      |
++-----------------------------------------------------------------------+
++--------------+---------------+------+-----+---------+----------------+
+| Field        | Type          | Null | Key | Default | Extra          |
++--------------+---------------+------+-----+---------+----------------+
+| id           | int unsigned  | NO   | PRI | NULL    | auto_increment |
+| employe_id   | int unsigned  | NO   | MUL | NULL    |                |
+| mois         | date          | NO   |     | NULL    |                |
+| salaire_brut | decimal(10,2) | NO   |     | NULL    |                |
+| primes       | decimal(10,2) | NO   |     | NULL    |                |
+| net_a_payer  | decimal(10,2) | NO   |     | NULL    |                |
++--------------+---------------+------+-----+---------+----------------+
++--------------+----------------+
+| TABLE_NAME   | CREATE_OPTIONS |
++--------------+----------------+
+| absences     |                |
+| contrats     |                |
+| departements |                |
+| employes     |                |
+| evaluations  |                |
+| salaires     |                |
++--------------+----------------+
++-------------+---------------+--------------+--------------+----------------+
+| mode_aes    | tables_defaut | redo_chiffre | undo_chiffre | binlog_chiffre |
++-------------+---------------+--------------+--------------+----------------+
+| aes-128-ecb |             0 |            0 |            0 |              0 |
++-------------+---------------+--------------+--------------+----------------+

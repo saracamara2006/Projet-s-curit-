@@ -1,0 +1,10 @@
+user	host	role_par_defaut
+audit_camara	172.31.77.20	role_auditeur_rh
+backup_camara	172.31.77.20	role_sauvegarde
+drh_camara	172.31.77.20	role_drh
+gest_camara	172.31.77.20	role_gestionnaire_rh
+mgr_dsi	172.31.77.20	role_manager
+mgr_fin	172.31.77.20	role_manager
+monitor_camara	172.31.77.20	role_supervision
+paie_camara	172.31.77.20	role_paie
+rh_camara_app	172.31.77.20	role_gestionnaire_rh

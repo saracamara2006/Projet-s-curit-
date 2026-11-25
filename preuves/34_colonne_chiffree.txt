@@ -1,0 +1,37 @@
++-------------------------+
+| @@block_encryption_mode |
++-------------------------+
+| aes-256-cbc             |
++-------------------------+
++----------------------+---------------+------+-----+---------+----------------+
+| Field                | Type          | Null | Key | Default | Extra          |
++----------------------+---------------+------+-----+---------+----------------+
+| id                   | int unsigned  | NO   | PRI | NULL    | auto_increment |
+| employe_id           | int unsigned  | NO   | MUL | NULL    |                |
+| mois                 | date          | NO   |     | NULL    |                |
+| salaire_brut_chiffre | varbinary(64) | NO   |     | NULL    |                |
+| primes_chiffre       | varbinary(64) | NO   |     | NULL    |                |
+| net_a_payer_chiffre  | varbinary(64) | NO   |     | NULL    |                |
++----------------------+---------------+------+-----+---------+----------------+
+*************************** 1. row ***************************
+                  id: 1
+          employe_id: 1
+                mois: 2026-09-01
+salaire_brut_chiffre: ÚíÀ°r^ü;XS›ÒŠ´ÝÇ5Ä4dÆ	ºÒÄoå
+      primes_chiffre: Ø­†Ò:ÿá.ì·kL¬Ð‘<\úòsÂu•Tc8ùx
+ net_a_payer_chiffre: ËVìÒYVDðŒ8H’ÙšÇÏRv¹2+ªŒnäbÿ–O³ø
+*************************** 2. row ***************************
+                  id: 2
+          employe_id: 1
+                mois: 2026-08-01
+salaire_brut_chiffre: Ë’LKu²&Ç7¥¹úü
+èx/{µNo N†®EÑB1’
+      primes_chiffre: ‘M?‹è~LsmÎïÞž_;Ø‚çmsÚ*¾s¤ÊJ
+ net_a_payer_chiffre: &O“®]ÂÎRô¯Ãõy2ÇAÒ)uƒd‡Ø¤Õüò‹
+*************************** 3. row ***************************
+                  id: 3
+          employe_id: 1
+                mois: 2026-07-01
+salaire_brut_chiffre: Ê 9ê¢¯Î=FÂâÔ”2Pèf¹K|9Ìêõ*@À
+      primes_chiffre: 0	.²p0ƒ€Žy¶±Ê›Äù_Ká(_¦^®#R§]ê‡
+ net_a_payer_chiffre: ëÊIù=Oé®hoP±kÿIUìIIŒ©³ùu>9ÌvŒp

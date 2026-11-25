@@ -1,0 +1,8 @@
+mgr_com : 149
+mgr_dsi : 149
+mgr_fin : 149
+mgr_jur : 149
+mgr_log : 149
+mgr_mkt : 149
+mgr_prod : 149
+mgr_rh : 149

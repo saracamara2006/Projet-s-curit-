@@ -1,0 +1,20 @@
+=== Verification tables chiffrees au repos ===
++---------------+--------------+--------------+----------------+
+| tables_defaut | redo_chiffre | undo_chiffre | binlog_chiffre |
++---------------+--------------+--------------+----------------+
+|             1 |            1 |            1 |              1 |
++---------------+--------------+--------------+----------------+
++--------------+----------------+
+| TABLE_NAME   | CREATE_OPTIONS |
++--------------+----------------+
+| absences     | ENCRYPTION='Y' |
+| contrats     | ENCRYPTION='Y' |
+| departements | ENCRYPTION='Y' |
+| employes     | ENCRYPTION='Y' |
+| evaluations  | ENCRYPTION='Y' |
+| salaires     | ENCRYPTION='Y' |
++--------------+----------------+
+=== Recherche chaines en clair dans employes.ibd (attendu : 0) ===
+0
+=== Recherche chaines en clair dans salaires.ibd (attendu : 0) ===
+0

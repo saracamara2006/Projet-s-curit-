@@ -1,0 +1,24 @@
+[mysqld]
+mysqlx = OFF
+skip_name_resolve = ON
+local_infile = OFF
+secure_file_priv = /var/lib/mysql-files
+general_log = OFF
+slow_query_log = ON
+slow_query_log_file = /var/lib/mysql/slow.log
+long_query_time = 1
+sql_mode = ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+
+[mysqld]
+default_table_encryption         = ON
+table_encryption_privilege_check = ON
+innodb_redo_log_encrypt          = ON
+innodb_undo_log_encrypt          = ON
+binlog_encryption                = ON
+
+[mysqld]
+require_secure_transport = ON
+tls_version = TLSv1.2,TLSv1.3
+ssl_ca = /etc/mysql/certs/ca.pem
+ssl_cert = /etc/mysql/certs/server-cert.pem
+ssl_key = /etc/mysql/certs/server-key.pem

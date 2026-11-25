@@ -1,0 +1,2 @@
+CURRENT_USER()	@@hostname
+sara_admin@172.31.77.20	ffa26e893c12

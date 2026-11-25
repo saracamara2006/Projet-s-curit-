@@ -1,0 +1,10 @@
+== t1 : vue simple (sans jointure) ==
+n
+1200
+== t2 : meme logique que v_mon_equipe, en TEMPTABLE ==
+ERROR 1143 (42000) at line 1: SELECT command denied to user 'rh_view_owner'@'%' for column 'manager_id' in table 'employes'
+== droits du proprietaire ==
+Grants for rh_view_owner@%
+GRANT USAGE ON *.* TO `rh_view_owner`@`%`
+GRANT SELECT ON `rh_camara`.`absences` TO `rh_view_owner`@`%`
+GRANT SELECT ON `rh_camara`.`employes` TO `rh_view_owner`@`%`

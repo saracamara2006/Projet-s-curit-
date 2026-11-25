@@ -1,0 +1,5 @@
+== ancien (doit echouer) ==
+ERROR 1045 (28000): Access denied for user 'rh_camara_app'@'172.31.77.20' (using password: YES)
+== nouveau ==
+nouveau OK
+nouveau OK

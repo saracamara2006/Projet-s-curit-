@@ -1,0 +1,18 @@
++------------------------------------------------------------------------------------------------------------------+
+| Grants for role_paie@%                                                                                           |
++------------------------------------------------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `role_paie`@`%`                                                                            |
+| GRANT SELECT (`departement_id`, `id`, `matricule`, `nom`, `prenom`) ON `rh_camara`.`employes` TO `role_paie`@`%` |
+| GRANT EXECUTE ON PROCEDURE `rh_camara`.`sp_ecrire_salaire` TO `role_paie`@`%`                                    |
+| GRANT EXECUTE ON PROCEDURE `rh_camara`.`sp_lire_salaires` TO `role_paie`@`%`                                     |
++------------------------------------------------------------------------------------------------------------------+
++------------------------------------------------------------------------------+
+| Grants for role_drh@%                                                        |
++------------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `role_drh`@`%`                                         |
+| GRANT SELECT, INSERT, UPDATE ON `rh_camara`.`absences` TO `role_drh`@`%`     |
+| GRANT SELECT, INSERT, UPDATE ON `rh_camara`.`contrats` TO `role_drh`@`%`     |
+| GRANT SELECT, INSERT, UPDATE ON `rh_camara`.`departements` TO `role_drh`@`%` |
+| GRANT SELECT, INSERT, UPDATE ON `rh_camara`.`employes` TO `role_drh`@`%`     |
+| GRANT SELECT, INSERT, UPDATE ON `rh_camara`.`evaluations` TO `role_drh`@`%`  |
++------------------------------------------------------------------------------+

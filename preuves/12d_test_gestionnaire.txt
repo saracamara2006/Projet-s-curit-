@@ -1,0 +1,7 @@
+-- modifier compte_mysql (doit etre refuse) :
+ERROR 1143 (42000) at line 1: UPDATE command denied to user 'gest_camara'@'172.31.77.20' for column 'compte_mysql' in table 'employes'
+-- modifier cin (doit etre refuse) :
+ERROR 1143 (42000) at line 1: UPDATE command denied to user 'gest_camara'@'172.31.77.20' for column 'cin' in table 'employes'
+-- modifier telephone (autorise) :
+-- lire les salaires (doit etre refuse) :
+ERROR 1142 (42000) at line 1: SELECT command denied to user 'gest_camara'@'172.31.77.20' for table 'salaires'

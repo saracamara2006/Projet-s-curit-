@@ -1,0 +1,47 @@
++----------------------+--------------+----------------+
+| user                 | host         | account_locked |
++----------------------+--------------+----------------+
+| admin_camara         | localhost    | N              |
+| audit_camara         | 172.31.77.20 | N              |
+| backup_camara        | 172.31.77.20 | N              |
+| drh_camara           | 172.31.77.20 | N              |
+| gest_camara          | 172.31.77.20 | N              |
+| mgr_dsi              | 172.31.77.20 | N              |
+| mgr_fin              | 172.31.77.20 | N              |
+| monitor_camara       | 172.31.77.20 | N              |
+| mysql.infoschema     | localhost    | Y              |
+| mysql.session        | localhost    | Y              |
+| mysql.sys            | localhost    | Y              |
+| paie_camara          | 172.31.77.20 | N              |
+| rh_camara_app        | 172.31.77.20 | N              |
+| rh_crypto_owner      | %            | Y              |
+| rh_view_owner        | %            | Y              |
+| role_auditeur_rh     | %            | Y              |
+| role_drh             | %            | Y              |
+| role_gestionnaire_rh | %            | Y              |
+| role_manager         | %            | Y              |
+| role_paie            | %            | Y              |
+| role_sauvegarde      | %            | Y              |
+| role_supervision     | %            | Y              |
+| root                 | localhost    | N              |
+| sara_camara_rh       | 172.31.77.20 | N              |
+| tls_client_camara    | 172.31.77.20 | N              |
++----------------------+--------------+----------------+
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| rh_camara          |
+| sys                |
++--------------------+
++---------------------+-----------------------------------------------------------------------------------------------------------------------+
+| Variable_name       | Value                                                                                                                 |
++---------------------+-----------------------------------------------------------------------------------------------------------------------+
+| local_infile        | OFF                                                                                                                   |
+| log_error_verbosity | 2                                                                                                                     |
+| secure_file_priv    | /var/lib/mysql-files/                                                                                                 |
+| skip_name_resolve   | ON                                                                                                                    |
+| sql_mode            | ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION |
++---------------------+-----------------------------------------------------------------------------------------------------------------------+

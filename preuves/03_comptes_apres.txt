@@ -1,0 +1,6 @@
+user	host	plugin	account_locked
+mysql.infoschema	localhost	caching_sha2_password	Y
+mysql.session	localhost	caching_sha2_password	Y
+mysql.sys	localhost	caching_sha2_password	Y
+root	localhost	caching_sha2_password	N
+sara_admin	172.31.77.20	caching_sha2_password	N

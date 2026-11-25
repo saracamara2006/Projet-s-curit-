@@ -1,0 +1,39 @@
++----------------------------+------------+----------------+----------------+
+| grantee                    | table_name | column_name    | privilege_type |
++----------------------------+------------+----------------+----------------+
+| 'role_gestionnaire_rh'@'%' | employes   | poste          | INSERT         |
+| 'role_gestionnaire_rh'@'%' | employes   | manager_id     | UPDATE         |
+| 'role_gestionnaire_rh'@'%' | employes   | departement_id | UPDATE         |
+| 'role_gestionnaire_rh'@'%' | employes   | email_pro      | UPDATE         |
+| 'role_gestionnaire_rh'@'%' | employes   | telephone      | UPDATE         |
+| 'role_gestionnaire_rh'@'%' | employes   | poste          | UPDATE         |
+| 'role_gestionnaire_rh'@'%' | employes   | adresse        | UPDATE         |
+| 'role_gestionnaire_rh'@'%' | employes   | prenom         | INSERT         |
+| 'role_gestionnaire_rh'@'%' | employes   | matricule      | INSERT         |
+| 'role_gestionnaire_rh'@'%' | employes   | manager_id     | INSERT         |
+| 'role_gestionnaire_rh'@'%' | employes   | departement_id | INSERT         |
+| 'role_gestionnaire_rh'@'%' | employes   | email_pro      | INSERT         |
+| 'role_gestionnaire_rh'@'%' | employes   | date_naissance | INSERT         |
+| 'role_gestionnaire_rh'@'%' | employes   | cin            | INSERT         |
+| 'role_gestionnaire_rh'@'%' | employes   | nom            | INSERT         |
+| 'role_gestionnaire_rh'@'%' | employes   | date_embauche  | INSERT         |
+| 'role_gestionnaire_rh'@'%' | employes   | telephone      | INSERT         |
+| 'role_gestionnaire_rh'@'%' | employes   | adresse        | INSERT         |
+| 'role_paie'@'%'            | employes   | prenom         | SELECT         |
+| 'role_paie'@'%'            | employes   | nom            | SELECT         |
+| 'role_paie'@'%'            | employes   | id             | SELECT         |
+| 'role_paie'@'%'            | employes   | matricule      | SELECT         |
+| 'role_paie'@'%'            | employes   | departement_id | SELECT         |
++----------------------------+------------+----------------+----------------+
++-------------------+-----------------+---------------+
+| TABLE_NAME        | DEFINER         | SECURITY_TYPE |
++-------------------+-----------------+---------------+
+| v_absences_equipe | rh_view_owner@% | DEFINER       |
+| v_mon_equipe      | rh_view_owner@% | DEFINER       |
++-------------------+-----------------+---------------+
++-----------------+------+----------------+
+| user            | host | account_locked |
++-----------------+------+----------------+
+| rh_crypto_owner | %    | Y              |
+| rh_view_owner   | %    | Y              |
++-----------------+------+----------------+

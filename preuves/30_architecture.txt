@@ -1,0 +1,14 @@
+NAME        IMAGE       COMMAND                  SERVICE   CREATED             STATUS             PORTS
+rh-client   mysql:8.4   "sleep infinity"         client    About an hour ago   Up About an hour   3306/tcp, 33060/tcp
+rh-db       mysql:8.4   "docker-entrypoint.s…"   db        About an hour ago   Up About an hour   3306/tcp, 33060/tcp
+
+rh-db 172.31.77.10/24
+rh-client 172.31.77.20/24
+
+
+0
++-----------+
+| VERSION() |
++-----------+
+| 8.4.13    |
++-----------+

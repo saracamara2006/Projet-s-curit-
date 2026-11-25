@@ -1,0 +1,14 @@
++--------------------------+----------------------------------+
+| Variable_name            | Value                            |
++--------------------------+----------------------------------+
+| require_secure_transport | ON                               |
+| ssl_ca                   | /etc/mysql/certs/ca.pem          |
+| ssl_cert                 | /etc/mysql/certs/server-cert.pem |
+| tls_version              | TLSv1.2,TLSv1.3                  |
++--------------------------+----------------------------------+
+SSL:			Cipher in use is TLS_AES_128_GCM_SHA256
+mysql: [Warning] Using a password on the command line interface can be insecure.
+ERROR 3159 (HY000): Connections using insecure transport are prohibited while --require_secure_transport=ON.
+SSL:			Cipher in use is TLS_AES_128_GCM_SHA256
+mysql: [Warning] Using a password on the command line interface can be insecure.
+ERROR 3159 (HY000): Connections using insecure transport are prohibited while --require_secure_transport=ON.

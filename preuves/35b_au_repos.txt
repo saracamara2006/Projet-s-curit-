@@ -1,0 +1,23 @@
++------------------------+------------+
+| NAME                   | ENCRYPTION |
++------------------------+------------+
+| mysql                  | Y          |
+| rh_camara/departements | Y          |
+| rh_camara/employes     | Y          |
+| rh_camara/contrats     | Y          |
+| rh_camara/salaires     | Y          |
+| rh_camara/absences     | Y          |
+| rh_camara/evaluations  | Y          |
++------------------------+------------+
++---------------------+
+| Tables_in_rh_camara |
++---------------------+
+| absences            |
+| contrats            |
+| departements        |
+| employes            |
+| evaluations         |
+| salaires            |
+| v_absences_equipe   |
+| v_mon_equipe        |
++---------------------+

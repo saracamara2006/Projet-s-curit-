@@ -1,0 +1,29 @@
+=== Restauration conteneur vierge (bloc 3.9) ===
+Sauvegarde utilisee : backups/20261124_175416
+
+--- 1. Verification integrite SHA256 ---
+binlogs.tar.enc: OK
+keyring.enc: OK
+rh_camara.sql.enc: OK
+
+--- 2. Demarrage MySQL vierge (sans keyring - test fonctionnel) ---
+MySQL pret.
+
+--- 3. Dechiffrement a la volee et restauration ---
+(openssl aes-256-cbc pbkdf2 | sed ENCRYPTION | mysql)
+
+--- 4. Verification des donnees ---
++----------+-------+
+| tbl      | lignes|
++----------+-------+
+| employes | 1200  |
+| salaires | 14400 |
++----------+-------+
+iv_distincts : 12  (preuve IV aleatoire AES-256-CBC)
+Colonnes salaires : salaire_brut_chiffre varbinary(64), primes_chiffre varbinary(64), net_a_payer_chiffre varbinary(64)
+
+RTO mesure  : 7s   (objectif cible : < 300s / 5 min)
+RPO cible   : < 60s (sauvegarde chiffree + binlogs continus)
+Note        : ENCRYPTION='Y' retiree a la volee (sed) car keyring absent du conteneur de test.
+              En production, restaurer keyring.enc avant l'import pour conserver le chiffrement tablespace.
+=== Restauration terminee avec succes ===

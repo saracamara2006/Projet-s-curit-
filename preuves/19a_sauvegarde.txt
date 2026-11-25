@@ -1,0 +1,2 @@
+Sauvegarde terminee en 6s : backups/full_20261124_162402/rh_camara.sql
+-rw-rw-r-- 1 sara sara 3,0M Nov 24 16:24 backups/full_20261124_162402/rh_camara.sql
