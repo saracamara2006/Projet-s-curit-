@@ -46,7 +46,7 @@ Le dépôt suit l'arborescence demandée par le sujet. Chaque mesure renvoie à 
 - **Aucun port publié** : le service `db` n'a pas de section `ports:`. Dans `preuves/01_ps_aucun_port.txt`, la colonne PORTS affiche `3306/tcp` sans flèche `->` : le port est déclaré par l'image, pas publié sur l'hôte.
 - Le mot de passe root est un secret Docker (`MYSQL_ROOT_PASSWORD_FILE`), pas une variable d'environnement en clair.
 - Montages en lecture seule : `conf/mysql.cnf`, `certs/`, `conf/mysqld.my`, `conf/component_keyring_file.cnf`. Le keyring est dans `keyring_data/`, séparé du volume de données `dbdata`.
-- Le client monte aussi le kit du cours (`/home/sara/kit` vers `/kit`, lecture seule).
+- Le client monte aussi le kit du cours (`/home/sara/kit` vers `/kit`, lecture seule) ; ce montage est facultatif et à adapter ou retirer si le kit est ailleurs.
 
 ## 2. Démarrage pas à pas
 
@@ -72,7 +72,10 @@ docker compose exec -T db sh -c 'MYSQL_PWD=$(cat /run/secrets/root_password) mys
    docker run --rm -v "$PWD/keyring_data":/k --entrypoint chmod mysql:8.4 700 /k
    ```
 4. **Démarrage** : `docker compose up -d`. Le dépôt contient déjà la configuration du keyring (`conf/mysqld.my`, `conf/component_keyring_file.cnf`, montages du compose) : le composant se charge dès le premier démarrage. Ne relancez pas `scripts/activer_keyring.sh`, qui a servi à mettre cette configuration en place et refuse de s'exécuter sur un compose déjà modifié.
-5. **Base et données** : `CREATE DATABASE rh_camara CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;` puis `sql/01_D_rh.sql` (schéma et données fictives, 1 200 employés et 14 400 lignes de salaires).
+5. **Base et données** : `CREATE DATABASE rh_camara CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;` puis `sql/01_D_rh.sql` (schéma et données fictives, 1 200 employés et 14 400 lignes de salaires), exécuté dans la base :
+   ```bash
+   docker compose exec -T db sh -c 'MYSQL_PWD=$(cat /run/secrets/root_password) mysql -uroot rh_camara' < sql/01_D_rh.sql
+   ```
 6. **Authentification** : `sql/02_auth.sql`. **Rôles et vues** : `sql/03_roles.sql`.
 7. **Durcissement des comptes** : `sql/04_root_localhost.sql`. **Admin nominatif** : `sql/05_admin_nominatif.sql` (mot de passe lu dans `secrets/admin_password.txt`).
 8. **Comptes techniques et applicatif** (aucun script ne les crée ; à exécuter avant l'étape 9) :
@@ -95,7 +98,7 @@ docker compose exec -T db sh -c 'MYSQL_PWD=$(cat /run/secrets/root_password) mys
     GRANT SELECT ON rh_camara.departements TO 'tls_client_camara'@'172.31.77.20';
     ```
 12. **Vérifications** : `bash scripts/demo_manager.sh`, `bash scripts/test_salaires.sh`, `bash scripts/verifier_ibd_chiffre.sh`.
-13. **Sauvegarde et restauration** : `bash scripts/sauvegarde.sh`, puis `bash scripts/restauration.sh` (section 8).
+13. **Sauvegarde et restauration** : `bash scripts/sauvegarde.sh`, puis `bash scripts/restauration.sh` (section 7).
 
 ## 3. Durcissement du serveur (bloc 3.2)
 
@@ -141,26 +144,28 @@ Cela fait **5 rôles métier** (drh, gestionnaire_rh, paie, manager, auditeur_rh
 | `gest_camara` | 172.31.77.20 | `role_gestionnaire_rh` |
 | `rh_camara_app` (applicatif) | 172.31.77.20 | `role_gestionnaire_rh` |
 | `paie_camara` | 172.31.77.20 | `role_paie` |
-| `mgr_dsi`, `mgr_fin` | 172.31.77.20 | `role_manager` |
+| `mgr_dsi`, `mgr_fin`, `mgr_rh`, `mgr_com`, `mgr_mkt`, `mgr_log`, `mgr_jur`, `mgr_prod` | 172.31.77.20 | `role_manager` (un compte par département, relié à `employes.compte_mysql`) |
 | `audit_camara` | 172.31.77.20 | `role_auditeur_rh` |
 | `backup_camara` | 172.31.77.20 | `role_sauvegarde` |
 | `monitor_camara` | 172.31.77.20 | `role_supervision` |
 | `tls_client_camara` | 172.31.77.20 | `SELECT` sur `departements` ; certificat client exigé |
-| `sara_camara_rh` | 172.31.77.20 | compte nominatif d'administration depuis le poste client |
 | `admin_camara` | localhost | administrateur nominatif (`ALL PRIVILEGES … WITH GRANT OPTION`, limité à la machine du serveur) |
 | `root` | localhost | administration locale |
 | `rh_view_owner` | % | propriétaire des vues, **verrouillé** (`ACCOUNT LOCK`) |
 | `rh_crypto_owner` | % | propriétaire des fonctions et procédures de chiffrement, **verrouillé** |
+| `role_*` (7 rôles) | % | rôles, donc comptes verrouillés par nature |
+
+Les comptes en `%` sont tous verrouillés : l'hôte `%` n'ouvre aucun accès réseau. L'audit du kit les signale (contrôle A08) ; écart accepté et justifié.
 
 ### Règles appliquées
 
 - **Comptes limités par adresse** : les comptes applicatifs et nominatifs ne fonctionnent que depuis 172.31.77.20 (possible parce que `skip_name_resolve` est actif). **Rôles par défaut** définis avec `SET DEFAULT ROLE` : sans cela, un rôle accordé n'est pas actif à la connexion.
-- **Aucun privilège global, ni `FILE`, ni `GRANT OPTION` pour les comptes applicatifs.** Seuls les comptes d'administration (`root`, `admin_camara`) ont `GRANT OPTION`, et seul le rôle de sauvegarde ou de supervision a des privilèges globaux limités.
+- **Aucun privilège global, ni `FILE`, ni `GRANT OPTION` pour les comptes applicatifs et métier.** Seuls `root` et `admin_camara` (locaux au serveur) ont `GRANT OPTION` ; les seuls privilèges globaux hors administration sont ceux, minimaux, de `role_sauvegarde` et `role_supervision`.
 - **Restriction par colonne** : `role_paie` (5 colonnes de `employes`) et `role_gestionnaire_rh` (écriture sur `employes` limitée à certaines colonnes ; refus de modifier `cin` et `compte_mysql`).
 - **Vues en `SQL SECURITY DEFINER`** avec un propriétaire dédié et verrouillé (`rh_view_owner`). Le filtre utilise `USER()` et non `CURRENT_USER()` : dans une vue `DEFINER`, `CURRENT_USER()` renverrait le propriétaire de la vue, pas le manager connecté.
 - **Vérification compte par compte** avec `SHOW GRANTS … USING`.
 
-Preuves : `11_roles_et_vues.txt`, `12_roles_par_defaut.txt`, `12b_show_grants_using.txt`, `12c_nettoyage_et_durcissement_roles.txt`, `12d_test_gestionnaire.txt`, `33_grants_roles.txt`. La mise au point des vues est documentée dans `11b_correction_definer.txt` à `11f_proprietaire_colonnes.txt` (voir limite n° 4).
+Preuves : `11_roles_et_vues.txt`, `12_roles_par_defaut.txt`, `12b_show_grants_using.txt`, `12c_nettoyage_et_durcissement_roles.txt`, `12d_test_gestionnaire.txt`, `33_grants_roles.txt`, `48_tous_les_managers.txt`. La mise au point des vues est documentée dans `11b_correction_definer.txt` à `11f_proprietaire_colonnes.txt` (voir limite n° 4).
 
 ## 6. Chiffrement en transit et au repos (bloc 3.6)
 
@@ -168,7 +173,7 @@ Preuves : `11_roles_et_vues.txt`, `12_roles_par_defaut.txt`, `12b_show_grants_us
 |---|---|---|
 | Autorité de certification du projet, certificats serveur avec SAN | `scripts/generer_tls.sh` : CA `Projet-RH-CA` (RSA 4096), certificat serveur dont le SAN contient `db`, `localhost`, `127.0.0.1` et l'IP du serveur, certificat client `CN=rh-client`. Validité de 365 jours. | `certs/` (certificats seulement), `37_tls.txt` |
 | `require_secure_transport`, TLS 1.2 et 1.3 uniquement | `require_secure_transport=ON` et `tls_version=TLSv1.2,TLSv1.3` dans `conf/mysql.cnf`. Une connexion sans TLS est refusée (erreur 3159). L'état avant activation est conservé dans `18a_etat_tls.txt`. | `18a_etat_tls.txt`, `18b_tls_actif.txt`, `37_tls.txt` |
-| Clients en `VERIFY_IDENTITY` | Test de connexion en `VERIFY_IDENTITY` depuis le client (le SAN contient `db`). Voir limite n° 6 : les scripts de démonstration utilisent TLS sans vérification d'identité. | `18b_tls_actif.txt` |
+| Clients en `VERIFY_IDENTITY` | Les scripts de démonstration (`demo_manager.sh`, `test_salaires.sh`) utilisent `--ssl-mode=VERIFY_IDENTITY` avec la CA du projet (le SAN contient `db`). Connexion refusée avec un nom absent du SAN. | `18b_tls_actif.txt`, `46_*`, `46b_*`, `47_*` |
 | Un compte exigeant un certificat client | `tls_client_camara` avec `REQUIRE SUBJECT '/CN=rh-client'` : refusé avec le mot de passe seul, accepté avec le certificat et la clé du client. | `18c_compte_x509.txt` |
 | Keyring | `component_keyring_file` chargé au démarrage ; fichier du keyring dans `keyring_data/` (mode 700, propriétaire UID 999). | `17a_chiffrement_repos.txt`, `35_au_repos.txt` |
 | Tables sensibles et schéma chiffrés par défaut | `default_table_encryption=ON` et `table_encryption_privilege_check=ON` ; les 6 tables de `rh_camara` sont en `ENCRYPTION='Y'`. | `17b_preuve_ibd.txt`, `35b_au_repos.txt` |
@@ -177,6 +182,8 @@ Preuves : `11_roles_et_vues.txt`, `12_roles_par_defaut.txt`, `12b_show_grants_us
 
 ### Chiffrement de colonne (contrainte D)
 
+- `block_encryption_mode = aes-256-cbc` est fixé dans `conf/mysql.cnf` : le défaut de MySQL est `aes-128-ecb` (voir `14_etat_avant_chiffrement.txt` et `15a_mode_aes.txt`).
+- Le tablespace `mysql` est aussi chiffré (`ALTER TABLESPACE mysql ENCRYPTION='Y'`, voir `35_au_repos.txt` puis `35b_au_repos.txt`).
 - `sql/20_chiffrement_salaires.sql` crée `fn_chiffrer` et `fn_dechiffrer` (propriétaire `rh_crypto_owner`) : AES-256-CBC, IV de 16 octets tiré par `RANDOM_BYTES(16)` et placé devant le chiffré. La clé de 32 octets est exigée par les fonctions (erreur sinon).
 - Le script ajoute trois colonnes `*_chiffre`, chiffre les 14 400 lignes, **contrôle que chaque ligne se déchiffre à l'identique**, puis supprime les colonnes en clair. `primes` et `net_a_payer` sont chiffrés aussi : `net_a_payer = (brut + primes) × 0,78`, donc le laisser en clair révélerait le salaire.
 - `sql/21_routines_salaires.sql` crée `sp_ecrire_salaire` et `sp_lire_salaires`, seul chemin d'accès. La clé est un paramètre : elle n'est jamais stockée dans la base. Les droits directs de `role_paie` et de `role_drh` sur `salaires` sont retirés.
@@ -188,15 +195,17 @@ Preuves : `11_roles_et_vues.txt`, `12_roles_par_defaut.txt`, `12b_show_grants_us
 - **Keyring stocké séparément** : après la sauvegarde, déplacez `keyring.enc` hors du projet (`mv backups/<horodatage>/keyring.enc ~/keyring_hors_projet/`). Avant une restauration, remettez-le dans le dossier de la sauvegarde : `restauration.sh` en a besoin pour la vérification SHA-256 et pour restaurer le chiffrement des tablespaces.
 - **`scripts/restauration.sh`** : vérification SHA-256, déchiffrement du keyring, démarrage d'un conteneur MySQL 8.4 vierge (`rh-restore-test`), restauration du dump déchiffré à la volée, contrôle des comptages (1 200 employés, 14 400 salaires), vérification des IV distincts et des options de chiffrement des tables. Le conteneur de test est supprimé à la fin.
 - **Objectifs fixés** : RTO ≤ 300 s (5 min) ; RPO ≤ 15 min.
-- **RTO mesuré** : 7 s lors du test de `preuves/19b_restauration_vierge.txt` (dernière exécution complète enregistrée, restauration sans keyring). `[À COMPLÉTER : valeur « RTO mesuré » affichée par la dernière exécution de scripts/restauration.sh, qui restaure aussi le keyring, et nom du fichier de preuve]`.
+- **RTO mesuré** : 7 s (`preuves/19b_restauration_vierge.txt`, restauration en conteneur vierge, sans keyring). Le script `restauration.sh` actuel (avec keyring) n'a pas de sortie complète enregistrée : `39_restauration.txt` s'arrête à l'étape 3.
 - **RPO** : l'objectif de 15 min n'est pas démontré (limite n° 1).
 
 ## 8. Conformité et audit (bloc 3.10)
 
 - **Matrice exigence / mesure / preuve** : 11 lignes rattachées à la loi 09-08 et au sujet, dans `conformite/matrice_conformite.md` (section 1).
-- **Écarts restants et plan de remédiation priorisé** : sections 2 et 3 du même fichier, ainsi que la section 10 de ce README.
-- **Rapport d'audit après durcissement** : `conformite/rapport_audit_apres.txt`. C'est un relevé des variables de sécurité (version 8.4.13, `skip_name_resolve`, `local_infile`, `general_log`, `slow_query_log`, `require_secure_transport`, `tls_version`, `default_table_encryption`, `binlog_encryption`) et du nombre de comptes non système (21 au moment du relevé). Ce n'est pas la sortie de l'outil d'audit du kit.
-- **Audit « avant »** : non capturé (limite n° 8). Seuls certains états « avant » sont conservés : `03_comptes_avant.txt` (comptes avant durcissement), `14_etat_avant_chiffrement.txt` (droits avant le chiffrement de colonne) et `18a_etat_tls.txt` (TLS avant activation).
+- **Écarts restants et plan de remédiation priorisé** : sections 2 et 3 du même fichier, et section 10 de ce README.
+- **Audit « avant »** : `conformite/audit_avant.csv`, sortie de `audit-mysql.sh` du kit sur un MySQL 8.4.13 vierge (image officielle, configuration d'usine) : **19 PASS, 11 FAIL, 9 WARN**. FAIL : D04 (root accessible hors local), A03 à A05 (pas de `validate_password`), C01 (TLS non imposé), C04 (pas de keyring), C06 (pas de chiffrement par défaut), C07 à C09 (redo, undo, binlog non chiffrés), H05 (GTID).
+- **Mesures qui corrigent ces FAIL** : D04 (`04_root_localhost.sql`), A03 à A05 (`02_auth.sql`), C01 (`require_secure_transport`), C04 et C06 à C09 (keyring, chiffrement par défaut, redo, undo, binlog). H05 relève du bonus 3.7 (réplication), non traité.
+- **Audit « après »** : la sortie de l'outil du kit sur `rh-db` n'a pas pu être capturée (connexion refusée depuis le client avec le compte d'audit ; voir limite n° 7). Le relevé manuel `conformite/rapport_audit_apres.txt` (version 8.4.13, `skip_name_resolve`, `local_infile`, `general_log`, `slow_query_log`, `require_secure_transport`, `tls_version`, `default_table_encryption`, `binlog_encryption`, nombre de comptes) le remplace partiellement, sans être la sortie de l'outil.
+- **États « avant » conservés** : `03_comptes_avant.txt`, `14_etat_avant_chiffrement.txt`, `18a_etat_tls.txt`.
 
 ## 9. Justification des choix
 
@@ -221,14 +230,17 @@ Par ordre de priorité :
 
 1. **RPO non démontré.** Les binlogs ne sont copiés qu'à chaque exécution de `sauvegarde.sh`, qui n'est pas planifiée. Remédiation : copie continue des binlogs et sauvegarde planifiée.
 2. **La restauration ne recrée pas les comptes, rôles et droits** (la sauvegarde ne contient que `rh_camara`). Il faut rejouer les étapes 6 à 9 de la section 2.
-3. **Secrets et keyring sur la même machine, sans copie hors site.** La passphrase de sauvegarde, la clé AES, la clé privée de la CA et le keyring sont tous sur l'hôte ; le déplacement de `keyring.enc` est manuel. Remédiation : gestionnaire de secrets ou copie hors site.
-4. **`rh_view_owner` a un `SELECT` sur les tables `employes` et `absences` entières** (`11d_isolation_vue.txt`). Les droits par colonne produisaient l'erreur 1143 sur la jointure des vues et la cause n'a pas été identifiée (`11c` à `11f`).
-5. **`role_drh` a `INSERT` et `UPDATE` sur des tables entières**, sans restriction par colonne.
-6. **`VERIFY_IDENTITY` n'est démontré que par un test** (`18b`). Les scripts de démonstration se connectent en TLS (imposé par le serveur) sans option de vérification d'identité.
-7. **Seuls 2 comptes managers sur 8** sont créés (`mgr_dsi`, `mgr_fin`) ; les 6 autres sont à créer sur le même modèle.
-8. **Pas de rapport d'audit « avant » durcissement**, et le rapport « après » est un relevé manuel, pas la sortie de l'outil d'audit du kit.
-9. **Certificats valables 365 jours**, sans renouvellement automatique.
-10. **Sauvegarde exécutée avec le compte `root`** (mot de passe lu dans le conteneur) ; le compte `backup_camara` et son rôle existent mais ne sont pas utilisés par le script.
+3. **Les fichiers `sql/` ne reproduisent pas exactement l'état final** : les droits par colonne du gestionnaire RH, les droits finaux de `rh_view_owner`, les comptes techniques (`rh_crypto_owner`, `rh_camara_app`, `tls_client_camara`) et le chiffrement du tablespace `mysql` sont documentés dans ce README et les preuves, mais pas tous regroupés dans un script. Remédiation : scripts `sql/06_*` et `sql/07_*`, puis test à blanc avec `docker compose down -v`.
+4. **`rh_view_owner` a un `SELECT` sur les tables `employes` et `absences` entières** (`11d_isolation_vue.txt`). Les droits par colonne produisaient l'erreur 1143 sur la jointure des vues ; la cause n'a pas été identifiée (`11c` à `11f`). Atténuation : compte verrouillé, vues limitées aux colonnes utiles.
+5. **Secrets et keyring sur la même machine, sans copie hors site.** Passphrase de sauvegarde, clé AES, clé privée de la CA et keyring sont sur l'hôte ; le déplacement de `keyring.enc` est manuel. Remédiation : gestionnaire de secrets ou copie hors site.
+6. **Le dossier `certs/` est monté en entier dans `db` et `client`** : la clé privée du serveur et celle de la CA sont visibles des deux conteneurs. Remédiation : monter chaque fichier séparément, seulement ceux dont le service a besoin.
+7. **Audit du kit « après » non capturé** (voir section 8). Remédiation : l'exécuter depuis le conteneur `db` avec `root` local, ou avec un compte d'audit nominatif dont le mot de passe est connu.
+8. **La clé AES des salaires transite dans le texte des appels `CALL`** : protégée sur le réseau par TLS, mais visible dans `performance_schema` et les journaux lents pour un administrateur. Remédiation : clé tenue par l'application (KMS), jamais dans une requête SQL.
+9. **Pas de traçabilité des accès ni des modifications sur les salaires** : le trigger d'audit relève du bonus 3.5, non traité.
+10. **`role_drh` a `INSERT` et `UPDATE` sur des tables entières**, sans restriction par colonne.
+11. **Certificats valables 365 jours**, sans renouvellement automatique.
+12. **Sauvegarde exécutée avec le compte `root`** (mot de passe lu dans le conteneur) ; le compte `backup_camara` et son rôle existent mais ne sont pas utilisés par le script.
+13. **`rh_camara_app` n'expire pas** : choix assumé pour ne pas couper l'application, compensé par la rotation à double mot de passe.
 
 ## 11. Bonus non traités
 
@@ -261,4 +273,4 @@ Aucune clé privée, aucun mot de passe réel, aucun fichier keyring ni sauvegar
 - OpenSSL : `req`, `x509`, `enc` (PBKDF2). https://docs.openssl.org/
 - Loi 09-08 relative à la protection des personnes physiques à l'égard du traitement des données à caractère personnel.
 - Kit de TP du cours (labs et corrigés) fourni par l'enseignant.
-- `[À COMPLÉTER : tout autre outil ou assistant utilisé pour ce projet, comme l'exige le sujet]`
+- Assistant IA (Claude, Anthropic) : relecture du livrable, explication d'erreurs et vérification de la cohérence entre le README, les preuves et la présentation. Les choix techniques, les commandes exécutées et les preuves sont les miens.
